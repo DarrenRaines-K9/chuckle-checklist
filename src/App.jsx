@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { createNewJoke, getAllJokes, editJoke} from "./services/jokeService.js"
+import { createNewJoke, getAllJokes, editJoke, deleteJoke} from "./services/jokeService.js"
 import "./App.css"
 import stevePic from "./assets/steve copy.png"
 
@@ -45,13 +45,16 @@ export const App = () => {
     editJoke(updatedJoke)
   }
 
-  
+  const handleDeleteJoke = (jokeId) => {
+    deleteJoke(jokeId).then(() => {setAllJokes(allJokes.filter(joke => joke.id !== jokeId ))
+    })
+  }
 
   return <div className="app-heading">
     <div className="app-heading-circle">
       <img className="app-logo" src={stevePic} alt="Good job Steve" />
     </div>
-    <div className="app-heading-text">Chuckle Checklist!</div>
+    <div className="app-heading-text">Chuckle Checklist</div>
     <div>
       <div className="joke-add-form">
         <input className="joke-input" type="text" placeholder="New One Liner" value={newJoke} onChange={(event) => {
@@ -68,8 +71,8 @@ export const App = () => {
             return (
               <div className="joke-list-item" key={joke.id}>
                 <p className="joke-list-item-text">{joke.text}</p>
-                <div className="joke-list-action-toggle"><button onClick={() => handleToldStatus(joke.id)} className="fa-regular fa-face-meh"></button></div>
-                <div className="joke-list-action-toggle"><button className="fa-solid fa-trash"></button></div>
+                <div className="joke-list-action-toggle"><button onClick={() => handleToldStatus(joke.id)} className="fa-regular fa-face-smile"></button></div>
+                <div className="joke-list-action-toggle"><button  onClick={() => handleDeleteJoke(joke.id)} className="fa-solid fa-trash"></button></div>
               </div>
             )
           })}
@@ -84,7 +87,7 @@ export const App = () => {
                 <div className="joke-list-item" key={joke.id}>
                   <div className="joke-list-item-text">{joke.text}</div>
                   <div className="joke-list-action-toggle"><button onClick={() => handleToldStatus(joke.id)} className="fa-regular fa-face-meh"></button></div>
-                  <div className="joke-list-action-toggle"><button className="fa-solid fa-trash"></button></div>                
+                  <div className="joke-list-action-toggle"><button  onClick={() => handleDeleteJoke(joke.id)} className="fa-solid fa-trash"></button></div>                
                 </div>
               )
             })}

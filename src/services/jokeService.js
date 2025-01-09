@@ -26,3 +26,7 @@ export const editJoke = async (editedJoke) => {
 
     const response = await fetch(`http://localhost:8088/jokes/${editedJoke.id}`, putOptions)
 }
+
+export const deleteJoke = async (jokeId) => {
+const response = await fetch(`http://localhost:8088/jokes/${jokeId}`, {method: "DELETE" })
+}
