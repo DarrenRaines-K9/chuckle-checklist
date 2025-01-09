@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { createNewJoke, getAllJokes} from "./services/jokeService.js"
+import { createNewJoke, getAllJokes, editJoke} from "./services/jokeService.js"
 import "./App.css"
 import stevePic from "./assets/steve copy.png"
 
@@ -38,6 +38,15 @@ export const App = () => {
     }
   }, [allJokes])
 
+  const handleToldStatus = (jokeId) => {
+    const updatedJokes = allJokes.map(joke => joke.id === jokeId ? {...joke, told: !joke.told} : joke)
+    setAllJokes(updatedJokes)
+    const updatedJoke = updatedJokes.find(joke => joke.id === jokeId)
+    editJoke(updatedJoke)
+  }
+
+  
+
   return <div className="app-heading">
     <div className="app-heading-circle">
       <img className="app-logo" src={stevePic} alt="Good job Steve" />
@@ -50,27 +59,36 @@ export const App = () => {
         }} />
         <button className="joke-input-submit" onClick={(event) => { createNewJoke(transientState), setNewJoke("") }}>Add</button>
       </div>
+      
       <div className="joke-lists-container">
-        <header className="joke-lists-container">Told</header>
+      <div className="joke-list-container">
+        <h2>Told<span className="told-count"> {toldJokes.length}</span></h2>
         <div >
           {toldJokes.map(joke => {
             return (
               <div className="joke-list-item" key={joke.id}>
-                <div className="joke-list-item-text">{joke.text}</div>
+                <p className="joke-list-item-text">{joke.text}</p>
+                <div className="joke-list-action-toggle"><button onClick={() => handleToldStatus(joke.id)} className="fa-regular fa-face-meh"></button></div>
+                <div className="joke-list-action-toggle"><button className="fa-solid fa-trash"></button></div>
               </div>
             )
           })}
         </div>
-        <div>
-          <header className="joke-lists-container">UnTold</header>
+        </div>
+        <div className="joke-list-container">
+        <div className="joke-list-container">
+          <h2> UnTold <span className="untold-count">{untoldJokes.length}</span></h2>
           <div >
             {untoldJokes.map(joke => {
               return (
                 <div className="joke-list-item" key={joke.id}>
                   <div className="joke-list-item-text">{joke.text}</div>
+                  <div className="joke-list-action-toggle"><button onClick={() => handleToldStatus(joke.id)} className="fa-regular fa-face-meh"></button></div>
+                  <div className="joke-list-action-toggle"><button className="fa-solid fa-trash"></button></div>                
                 </div>
               )
             })}
+            </div>
           </div>
         </div>
       </div>
