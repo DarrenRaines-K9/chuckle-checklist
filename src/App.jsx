@@ -22,7 +22,6 @@ export const App = () => {
       getAllJokes().then((jokeArray) => {
       setAllJokes(jokeArray)
     })
-
   }
 
   useEffect(() => {
@@ -71,8 +70,8 @@ export const App = () => {
             return (
               <div className="joke-list-item" key={joke.id}>
                 <p className="joke-list-item-text">{joke.text}</p>
-                <div className="joke-list-action-toggle"><button onClick={() => handleToldStatus(joke.id)} className="fa-regular fa-face-smile"></button></div>
-                <div className="joke-list-action-toggle"><button  onClick={() => handleDeleteJoke(joke.id)} className="fa-solid fa-trash"></button></div>
+                <div className="joke-list-action-toggle"><button className="joke-list-action-toggle" onClick={() => handleToldStatus(joke.id)}> <i className="fa-regular fa-face-smile" /></button></div>
+                <div className="joke-list-action-toggle"><button className="joke-list-action-delete" onClick={() => handleDeleteJoke(joke.id)}> <i className="fa-solid fa-trash" /></button></div>
               </div>
             )
           })}
@@ -86,8 +85,8 @@ export const App = () => {
               return (
                 <div className="joke-list-item" key={joke.id}>
                   <div className="joke-list-item-text">{joke.text}</div>
-                  <div className="joke-list-action-toggle"><button onClick={() => handleToldStatus(joke.id)} className="fa-regular fa-face-meh"></button></div>
-                  <div className="joke-list-action-toggle"><button  onClick={() => handleDeleteJoke(joke.id)} className="fa-solid fa-trash"></button></div>                
+                  <div className="joke-list-action-toggle"><button className="joke-list-action-toggle" onClick={() => handleToldStatus(joke.id)}><i className="fa-regular fa-face-meh" /></button></div>
+                  <div className="joke-list-action-toggle"><button  className="joke-list-action-delete"onClick={() => handleDeleteJoke(joke.id)}><i className="fa-solid fa-trash" /></button></div>                
                 </div>
               )
             })}
